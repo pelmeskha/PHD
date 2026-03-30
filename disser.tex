@@ -1,0 +1,190 @@
+\PassOptionsToPackage{usenames, dvipsnames}{color}
+\documentclass[12pt,a4paper]{extreport}
+
+\usepackage{float} % для [H] в картинках
+\usepackage{mathrsfs} % для \mathscr{L}
+\usepackage{mathtext} % в формулах подписи меньше, по центру, 
+\usepackage[T2A]{fontenc} % цифры посередине после формул кэпшн 2 - для подписей по центру. 
+\usepackage[cp1251]{inputenc} %по центру титул2. 
+\usepackage[english,russian]{babel} %тексты программы заголовки программ
+\usepackage{nicematrix} % для ровных матриц
+\usepackage{amsfonts,amsmath,amssymb,longtable,hhline}
+\usepackage{multicol}
+\usepackage{color,soul}
+\usepackage{graphicx}
+\usepackage{diagbox}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[numbered]{mcode}
+\usepackage{subcaption}
+\usepackage{extsizes}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{cmap}
+
+\usepackage{minted}
+\usepackage{setspace}
+\setminted{tabsize = 3}
+
+\DeclareMathOperator\arctanh{arctanh}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\sn}{sn}
+
+\geometry{left = 3cm}
+\geometry{right = 1.5cm}
+\geometry{top = 2cm}
+\geometry{bottom = 2cm}
+
+\parindent = 1.20cm      % абзацный отступ (обычно 1.27cm)
+
+\righthyphenmin = 2      % переносить последние 2 символа от слова
+\renewcommand*{\baselinestretch}{1.3} % межстрочное расстояние = 100%
+\newcommand{\No}{№}
+\tolerance = 1000         % мера разреженности (по умолчанию = 200)
+\renewcommand*\thesection{\arabic{section}}
+
+\newtheorem{theorem}{Standing}
+\newtheorem{lemma}[theorem]{Standing}
+%\addto\captionsrussian{\def\refname{Bibliography}}
+\addto\captionsrussian{% force renaming russian to english
+  \renewcommand{\chaptername}{Chapter}%
+  \renewcommand{\contentsname}{Contents}%
+}
+
+\begin{document}
+	\vspace{1em}
+
+	\begin{center}
+		\large Numerical study
+		\large of coupled Ginzburg-Landau Equations
+	\end{center}
+	\tableofcontents
+
+
+	\chapter*{Introduction}\label{ch100}
+	\addcontentsline{toc}{chapter}{Introduction}
+		\section{Modern overview}\label{ch110}
+			
+
+		\section{Targets and goals}\label{ch120}
+			Pulse propagation in erbium-doped fiber (EDF) can be described by the following coupled Ginzburg-Landau equations:
+
+			\begin{equation} \label{eq1}
+				\begin{cases}
+					\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial T^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial T^2} + i\gamma\left(\left|u\right|^2 + \frac{2}{3} \left|v\right|^2\right)u + \frac{i\gamma}{3}v^2 u^*, \\
+					\frac{\partial{v}}{\partial{z}} = \frac{i \Delta \beta}{2}v - \delta \frac{\partial{v}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 v}{\partial T^2} + \frac{g}{2}v + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 v}{\partial T^2} + i\gamma\left(\left|v\right|^2 + \frac{2}{3} \left|u\right|^2\right)u + \frac{i\gamma}{3}u^2 v^*,
+				\end{cases}
+			\end{equation}
+			where \(u\) and \(v\) are slowly varying pulse envelopes.
+			Our goal is to study different effects of pulse propagation using numerical simulations of Eq. \ref{eq1}.
+	\newpage
+
+	\chapter{Analytical analysis}\label{ch200}
+		\section{Particular analytical solutions of original equation}\label{ch210}
+			Let us consider first equation of Eq. \ref{eq1}, assuming \(v=0\):
+			\begin{equation} \label{eq2}
+				\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial T^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial T^2} + i\gamma\left|u\right|^2 u.
+			\end{equation}
+
+			Using traveling wave reduction in the form:
+			\begin{equation} \label{eq3}
+				u\left(z, T\right) = y(\mathrm{w}) e^{i\left(k z-\omega T\right)}, \quad \text{where} \quad \mathrm{w} = z - c_{0} T,
+			\end{equation}
+			and evaluating corresponding derivatives:
+			\begin{equation} \label{eq4}
+				\begin{cases}
+					\frac{\partial u}{\partial z} = \left(y_{\mathrm{w}} + i k y\right) e^{i\left(k z-\omega T\right)},\\
+					\frac{\partial u}{\partial T} = \left(-c_{0} y_{\mathrm{w}} - i \omega y\right) e^{i\left(k z-\omega T\right)}, \\
+					\frac{\partial^2 u}{\partial T^2} = \left(c^{2}_{0}y_{\mathrm{ww}} + 2 i\omega c_{0} y_{\mathrm{w}} - \omega^{2}y\right) e^{i\left(k z-\omega T\right)},
+				\end{cases}
+			\end{equation}
+			we can rewrite Eq. \ref{eq2} as:
+			\begin{equation} \label{eq5}
+				\begin{split}
+					&\left[\frac{c^{2}_{0} g}{2 \Omega^2_{g}} -i \left(\frac{c^2_{0}\beta_{2}} {2}\right)\right] \cdot y_{\mathrm{ww}} +
+					\left[\delta c_{0} - 1 + \beta_{2} \omega c_{0} + i \left(\frac{c_{0} g \omega}{\Omega^2_{g}}\right)\right] \cdot y_{\mathrm{w}} +\\
+					& + \left[\frac{g}{2}\left(1-\frac{\omega^{2}}{\Omega^2_{g}}\right) + i \left(\frac{\Delta \beta}{2}+\delta \omega + \frac{\beta_{2}}{2} \omega^{2} -k\right)\right]\cdot y +
+					i \gamma y^{3} = 0.
+				\end{split}
+			\end{equation}
+
+			Extracting real and imaginary parts of  Eq. \ref{eq5}, we obtain over-defined system of equations in the form:
+			\begin{equation} \label{eq6}
+				\begin{cases}
+					\left(\frac{c^{2}_{0} g}{2 \Omega^2_{g}}\right) \cdot y_{\mathrm{ww}} + \left(\delta c_{0} - 1 + \beta_{2} \omega c_{0}\right) \cdot y_{\mathrm{w}} + \left[\frac{g}{2}\left(1-\frac{\omega^{2}}{\Omega^2_{g}}\right)\right] \cdot y = 0,\\
+					\left(-\frac{\beta_{2} c^{2}_{0}}{2}\right) \cdot y_{\mathrm{ww}} + \left(\frac{c_{0} g \omega}{\Omega^2_{g}}\right) \cdot y_{\mathrm{w}} + \left(\frac{\Delta \beta}{2} + \delta \omega + \frac{\beta_{2} \omega^{2}}{2} - k\right) \cdot y + \gamma \cdot y^3 = 0.
+				\end{cases}
+			\end{equation}
+
+			At parameters:
+			\begin{equation} \label{eq7}
+				\begin{cases}
+				\delta = \frac{1-\beta_{2} c_{0} \omega}{c_{0}},\\
+				g = 0,
+				\end{cases}
+			\end{equation}
+			the equation for real part (second equation from system \ref{eq6}) can be satisfied, while imaginary part equation can be written as:
+			\begin{equation} \label{eq8}
+				-\left(\frac{\beta_{2} c_{0}^{2}}{2} \right)y_{\mathrm{ww}} + \left(-\frac{\beta_{2} \omega^{2}}{2}+\frac{\omega}{c_{0}}-k +\frac{\Delta \beta}{2}\right) y + \gamma  y^{3} =0
+			\end{equation}
+
+			Eq. \ref{eq8} is a second-order nonlinear autonomous differential equation. It takes the form:
+			\begin{equation} \label{eq9}
+				y_{\mathrm{ww}} + \xi_{1} y + \xi_{2} y^3 = 0,
+			\end{equation}
+			where
+			\begin{equation} \label{eq10}
+				\begin{cases}
+				\xi_{1} = -\frac{\omega^{2}}{c_{0}^{2}}+\frac{2 \omega}{c_{0}^{3} \beta_{2}}-\frac{2 k}{c_{0}^{2} \beta_{2}}+\frac{\Delta \beta}{c_{0}^{2} \beta_{2}},\\
+				\xi_{2} = \frac{2 \gamma}{c_{0}^{2} \beta_{2}}.
+				\end{cases}
+			\end{equation}
+
+			After multiplying Eq. \ref{eq10} on \(y_{\mathrm{w}}\) and integrating, we obtain first integral:
+			\begin{equation} \label{eq11}
+				\frac{y^2_{\mathrm{w}}}{2} + \frac{\xi_{1}}{2} y^2 + \frac{\xi_{2}}{4} y^4 = I_{1}.
+			\end{equation}
+
+			The first derivative of wave envelope then takes form:
+			\begin{equation} \label{eq12}
+				y_{\mathrm{w}} = \pm \sqrt{2I_{1} - \xi_{1}y^2-\frac{\xi_{2}}{2}y^4},
+			\end{equation}
+			or
+			\begin{equation} \label{eq13}
+				\pm \left(\mathrm{w} - \mathrm{w}_{0}\right) = \int \frac{dy}{ \sqrt{2I_{1} - \xi_{1}y^2-\frac{\xi_{2}}{2}y^4}}.
+			\end{equation}
+
+			Integral \ref{eq13} can be expressed via Jacobi Elliptic Functions, and cannot be computed analytically.
+			By introducing new variable \(y\left(\mathrm{w}\right) = \sqrt{Y\left(\mathrm{w}\right)}\), Eq. \ref{eq11} can be written with lower nonlinearity degree as follows:
+			\begin{equation} \label{eq14}
+				Y^2_{\mathrm{w}} + 2\xi_{2}Y^3 + 4\xi_{1}Y^2 -8 I_{1} Y = 0.
+			\end{equation}
+
+			Next, we apply the Simplest Equations Method [cite] to Eq. \ref{eq14}. We will be looking for \(Y\left(\mathrm{w}\right)\) in form:
+			\begin{equation} \label{eq15}
+				Y\left(\mathrm{w}\right) = M_{0} + M_{1}Q\left(\mathrm{w}\right) + M_{2}Q^2\left(\mathrm{w}\right),
+			\end{equation}
+			where \(Q\left(\mathrm{w}\right)\) is the solution of Riccati equation:
+			\begin{equation}\label{eq16}
+				Q_{\mathrm{w}} = \mu\,(Q^{2}-Q),
+			\end{equation}
+			of the form:
+			\begin{equation}\label{eq17}
+				Q(\mathrm{w}) = \frac{1}{1 + \exp\left(\mu(\mathrm{w}-\mathrm{w}_{0})\right)}.
+			\end{equation}
+
+			Using \ref{eq15} and \ref{eq16}, \ref{eq14} can be written as:
+			\begin{equation}\label{eq18}
+				<big polynom>
+			\end{equation}
+		\section{Numerical methods description}\label{ch220}			
+
+	\chapter{Numerical Analysis}\label{ch300}
+	
+	\chapter{Conclusion}\label{ch400}
+	
+	\bibliographystyle{unsrt}
+	\bibliography{export}
+
+\end{document} 
