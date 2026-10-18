@@ -47,59 +47,55 @@
 \newtheorem{theorem}{Standing}
 \newtheorem{lemma}[theorem]{Standing}
 %\addto\captionsrussian{\def\refname{Bibliography}}
-\addto\captionsrussian{% force renaming russian to english
-  \renewcommand{\chaptername}{Chapter}%
-  \renewcommand{\contentsname}{Contents}%
-}
 
 \begin{document}
 	\vspace{1em}
 
 	\begin{center}
-		\large Numerical study
-		\large of coupled Ginzburg-Landau Equations
+		\large Численное исследование
+		\large связанных уравнений Гинзбурга-Ландау
 	\end{center}
 	\tableofcontents
 
 
-	\chapter*{Introduction}\label{ch100}
-	\addcontentsline{toc}{chapter}{Introduction}
-		\section{Modern overview}\label{ch110}
+	\chapter*{Введение}\label{ch100}
+	\addcontentsline{toc}{chapter}{Введение}
+		\section{Современный обзор}\label{ch110}
 			
 
-		\section{Targets and goals}\label{ch120}
-			Pulse propagation in erbium-doped fiber (EDF) can be described by the following coupled Ginzburg-Landau equations:
+		\section{Цели и задачи}\label{ch120}
+			Распространение импульса в легированном эрбием волокне (EDF) может быть описано следующей системой связанных уравнений Гинзбурга-Ландау:
 
 			\begin{equation} \label{eq1}
 				\begin{cases}
-					\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial T^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial T^2} + i\gamma\left(\left|u\right|^2 + \frac{2}{3} \left|v\right|^2\right)u + \frac{i\gamma}{3}v^2 u^*, \\
-					\frac{\partial{v}}{\partial{z}} = \frac{i \Delta \beta}{2}v - \delta \frac{\partial{v}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 v}{\partial T^2} + \frac{g}{2}v + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 v}{\partial T^2} + i\gamma\left(\left|v\right|^2 + \frac{2}{3} \left|u\right|^2\right)u + \frac{i\gamma}{3}u^2 v^*,
+					\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{t}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial t^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial t^2} + i\gamma\left(\left|u\right|^2 + \frac{2}{3} \left|v\right|^2\right)u + \frac{i\gamma}{3}v^2 u^*, \\
+					\frac{\partial{v}}{\partial{z}} = \frac{i \Delta \beta}{2}v - \delta \frac{\partial{v}}{\partial{t}} - \frac{i\beta_{2}}{2} \frac{\partial^2 v}{\partial t^2} + \frac{g}{2}v + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 v}{\partial t^2} + i\gamma\left(\left|v\right|^2 + \frac{2}{3} \left|u\right|^2\right)v + \frac{i\gamma}{3}u^2 v^*,
 				\end{cases}
 			\end{equation}
-			where \(u\) and \(v\) are slowly varying pulse envelopes.
-			Our goal is to study different effects of pulse propagation using numerical simulations of Eq. \ref{eq1}.
+			где \(u\) и \(v\) -- медленно меняющиеся огибающие импульса.
+			Цель работы -- изучить различные эффекты распространения импульса с помощью численного моделирования уравнения (\ref{eq1}).
 	\newpage
 
-	\chapter{Analytical analysis}\label{ch200}
-		\section{Particular analytical solutions of original equation}\label{ch210}
-			Let us consider first equation of Eq. \ref{eq1}, assuming \(v=0\):
+	\chapter{Аналитический анализ}\label{ch200}
+		\section{Частные аналитические решения исходного уравнения}\label{ch210}
+			Рассмотрим первое уравнение системы (\ref{eq1}), полагая \(v=0\):
 			\begin{equation} \label{eq2}
-				\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{T}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial T^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial T^2} + i\gamma\left|u\right|^2 u.
+				\frac{\partial{u}}{\partial{z}} = \frac{i \Delta \beta}{2}u - \delta \frac{\partial{u}}{\partial{t}} - \frac{i\beta_{2}}{2} \frac{\partial^2 u}{\partial t^2} + \frac{g}{2}u + \frac{g}{2\Omega^2_{g}}\frac{\partial^2 u}{\partial t^2} + i\gamma\left|u\right|^2 u.
 			\end{equation}
 
-			Using traveling wave reduction in the form:
+			Используем редукцию к бегущей волне вида:
 			\begin{equation} \label{eq3}
-				u\left(z, T\right) = y(\mathrm{w}) e^{i\left(k z-\omega T\right)}, \quad \text{where} \quad \mathrm{w} = z - c_{0} T,
+				u\left(z, t\right) = y(\mathrm{w}) e^{i\left(k z-\omega t\right)}, \quad \text{где} \quad \mathrm{w} = z - c_{0} t,
 			\end{equation}
-			and evaluating corresponding derivatives:
+			и вычислим соответствующие производные:
 			\begin{equation} \label{eq4}
 				\begin{cases}
-					\frac{\partial u}{\partial z} = \left(y_{\mathrm{w}} + i k y\right) e^{i\left(k z-\omega T\right)},\\
-					\frac{\partial u}{\partial T} = \left(-c_{0} y_{\mathrm{w}} - i \omega y\right) e^{i\left(k z-\omega T\right)}, \\
-					\frac{\partial^2 u}{\partial T^2} = \left(c^{2}_{0}y_{\mathrm{ww}} + 2 i\omega c_{0} y_{\mathrm{w}} - \omega^{2}y\right) e^{i\left(k z-\omega T\right)},
+					\frac{\partial u}{\partial z} = \left(y_{\mathrm{w}} + i k y\right) e^{i\left(k z-\omega t\right)},\\
+					\frac{\partial u}{\partial t} = \left(-c_{0} y_{\mathrm{w}} - i \omega y\right) e^{i\left(k z-\omega t\right)}, \\
+					\frac{\partial^2 u}{\partial t^2} = \left(c^{2}_{0}y_{\mathrm{ww}} + 2 i\omega c_{0} y_{\mathrm{w}} - \omega^{2}y\right) e^{i\left(k z-\omega t\right)},
 				\end{cases}
 			\end{equation}
-			we can rewrite Eq. \ref{eq2} as:
+			тогда уравнение (\ref{eq2}) можно переписать в виде:
 			\begin{equation} \label{eq5}
 				\begin{split}
 					&\left[\frac{c^{2}_{0} g}{2 \Omega^2_{g}} -i \left(\frac{c^2_{0}\beta_{2}} {2}\right)\right] \cdot y_{\mathrm{ww}} +
@@ -109,82 +105,301 @@
 				\end{split}
 			\end{equation}
 
-			Extracting real and imaginary parts of  Eq. \ref{eq5}, we obtain over-defined system of equations in the form:
+			Выделяя действительную и мнимую части уравнения (\ref{eq5}), получаем переопределённую систему уравнений:
 			\begin{equation} \label{eq6}
 				\begin{cases}
-					\left(\frac{c^{2}_{0} g}{2 \Omega^2_{g}}\right) \cdot y_{\mathrm{ww}} + \left(\delta c_{0} - 1 + \beta_{2} \omega c_{0}\right) \cdot y_{\mathrm{w}} + \left[\frac{g}{2}\left(1-\frac{\omega^{2}}{\Omega^2_{g}}\right)\right] \cdot y = 0,\\
-					\left(-\frac{\beta_{2} c^{2}_{0}}{2}\right) \cdot y_{\mathrm{ww}} + \left(\frac{c_{0} g \omega}{\Omega^2_{g}}\right) \cdot y_{\mathrm{w}} + \left(\frac{\Delta \beta}{2} + \delta \omega + \frac{\beta_{2} \omega^{2}}{2} - k\right) \cdot y + \gamma \cdot y^3 = 0.
+					\displaystyle \left(\frac{c^{2}_{0} g}{2 \Omega^2_{g}}\right) \cdot y_{\mathrm{ww}} + \left(\delta c_{0} - 1 + \beta_{2} \omega c_{0}\right) \cdot y_{\mathrm{w}} + \left[\frac{g}{2}\left(1-\frac{\omega^{2}}{\Omega^2_{g}}\right)\right] \cdot y = 0,\\
+					\displaystyle \left(-\frac{\beta_{2} c^{2}_{0}}{2}\right) \cdot y_{\mathrm{ww}} + \left(\frac{c_{0} g \omega}{\Omega^2_{g}}\right) \cdot y_{\mathrm{w}} + \left(\frac{\Delta \beta}{2} + \delta \omega + \frac{\beta_{2} \omega^{2}}{2} - k\right) \cdot y + \gamma \cdot y^3 = 0.
 				\end{cases}
 			\end{equation}
 
-			At parameters:
+			При параметрах:
 			\begin{equation} \label{eq7}
 				\begin{cases}
-				\delta = \frac{1-\beta_{2} c_{0} \omega}{c_{0}},\\
-				g = 0,
+				\displaystyle \delta = \frac{1-\beta_{2} c_{0} \omega}{c_{0}},\\
+				\displaystyle g = 0,
 				\end{cases}
 			\end{equation}
-			the equation for real part (second equation from system \ref{eq6}) can be satisfied, while imaginary part equation can be written as:
+			уравнение для действительной части (второе уравнение системы \ref{eq6}) выполняется, а уравнение для мнимой части принимает вид:
 			\begin{equation} \label{eq8}
 				-\left(\frac{\beta_{2} c_{0}^{2}}{2} \right)y_{\mathrm{ww}} + \left(-\frac{\beta_{2} \omega^{2}}{2}+\frac{\omega}{c_{0}}-k +\frac{\Delta \beta}{2}\right) y + \gamma  y^{3} =0
 			\end{equation}
 
-			Eq. \ref{eq8} is a second-order nonlinear autonomous differential equation. It takes the form:
+			Уравнение (\ref{eq8}) является нелинейным автономным дифференциальным уравнением второго порядка. Его можно записать в виде:
 			\begin{equation} \label{eq9}
 				y_{\mathrm{ww}} + \xi_{1} y + \xi_{2} y^3 = 0,
 			\end{equation}
-			where
+			где
 			\begin{equation} \label{eq10}
 				\begin{cases}
-				\xi_{1} = -\frac{\omega^{2}}{c_{0}^{2}}+\frac{2 \omega}{c_{0}^{3} \beta_{2}}-\frac{2 k}{c_{0}^{2} \beta_{2}}+\frac{\Delta \beta}{c_{0}^{2} \beta_{2}},\\
-				\xi_{2} = \frac{2 \gamma}{c_{0}^{2} \beta_{2}}.
+				\displaystyle \xi_{1} = -\frac{\omega^{2}}{c_{0}^{2}}+\frac{2 \omega}{c_{0}^{3} \beta_{2}}-\frac{2 k}{c_{0}^{2} \beta_{2}}+\frac{\Delta \beta}{c_{0}^{2} \beta_{2}},\\
+				\displaystyle \xi_{2} = \frac{2 \gamma}{c_{0}^{2} \beta_{2}}.
 				\end{cases}
 			\end{equation}
 
-			After multiplying Eq. \ref{eq10} on \(y_{\mathrm{w}}\) and integrating, we obtain first integral:
+			Общее решение уравнения (\ref{eq9}) имеет полюс первого порядка, так как два старших члена имеют порядки \(p-2\) и \(3p\). Умножая уравнение (\ref{eq9}) на \(y_{\mathrm{w}}\) и интегрируя, получаем:
 			\begin{equation} \label{eq11}
 				\frac{y^2_{\mathrm{w}}}{2} + \frac{\xi_{1}}{2} y^2 + \frac{\xi_{2}}{4} y^4 = I_{1}.
 			\end{equation}
 
-			The first derivative of wave envelope then takes form:
+			Из уравнения (\ref{eq11}) находим первую производную огибающей волны:
 			\begin{equation} \label{eq12}
 				y_{\mathrm{w}} = \pm \sqrt{2I_{1} - \xi_{1}y^2-\frac{\xi_{2}}{2}y^4},
 			\end{equation}
-			or
+			или
 			\begin{equation} \label{eq13}
 				\pm \left(\mathrm{w} - \mathrm{w}_{0}\right) = \int \frac{dy}{ \sqrt{2I_{1} - \xi_{1}y^2-\frac{\xi_{2}}{2}y^4}}.
 			\end{equation}
 
-			Integral \ref{eq13} can be expressed via Jacobi Elliptic Functions, and cannot be computed analytically.
-			By introducing new variable \(y\left(\mathrm{w}\right) = \sqrt{Y\left(\mathrm{w}\right)}\), Eq. \ref{eq11} can be written with lower nonlinearity degree as follows:
+			При выполнении следующих ограничений на параметры:
+			\begin{equation} \label{eq13_1}
+				2 \xi_{1} + \xi_{2} = 4I_{1},
+			\end{equation}
+			интеграл (\ref{eq13}) принимает вид:
+			\begin{equation} \label{eq13_2}
+				\pm \left(\mathrm{w} - \mathrm{w}_{0}\right) = \sqrt{2I_{1}}\int_{0}^{y} \frac{dp}{ \sqrt{\left(1 - p^2\right)\left(1 - d^2 p^2\right)}},
+			\end{equation}
+			где \(p^2 = \frac{\xi_{1}}{2I_{1}} -1 =-\frac{\xi_{2}}{4I_{1}}\).
+
+			Интеграл в уравнении (\ref{eq13_2}) является обычным эллиптическим интегралом Лежандра первого рода в форме Якоби. Следовательно, выражение (\ref{eq13}) с учётом (\ref{eq13_1}) приводит к:
+			\begin{equation} \label{eq13_3}
+				\pm \left(\mathrm{w} - \mathrm{w}_{0}\right) = \sqrt{2I_{1}} \cdot F \left(y, \sqrt{- \frac{\xi_{2}}{4I_{1}}} \right),
+			\end{equation}
+			и этот интеграл не может быть вычислен аналитически.
+
+			Для нахождения точного решения уравнения (\ref{eq11}) введём новую переменную \(y\left(\mathrm{w}\right) = \sqrt{Y\left(\mathrm{w}\right)}\) и перепишем уравнение с меньшей степенью нелинейности:
 			\begin{equation} \label{eq14}
 				Y^2_{\mathrm{w}} + 2\xi_{2}Y^3 + 4\xi_{1}Y^2 -8 I_{1} Y = 0.
 			\end{equation}
 
-			Next, we apply the Simplest Equations Method [cite] to Eq. \ref{eq14}. We will be looking for \(Y\left(\mathrm{w}\right)\) in form:
+			Далее применим метод Кудряшова [ссылка] к уравнению (\ref{eq14}).
+			Сначала определим порядок полюса общего решения. Старшие члены имеют степени \(2p+2\) и \(3p\). Решение имеет полюс второго порядка.
+			Поэтому будем искать \(Y\left(\mathrm{w}\right)\) в виде:
 			\begin{equation} \label{eq15}
 				Y\left(\mathrm{w}\right) = M_{0} + M_{1}Q\left(\mathrm{w}\right) + M_{2}Q^2\left(\mathrm{w}\right),
 			\end{equation}
-			where \(Q\left(\mathrm{w}\right)\) is the solution of Riccati equation:
+			где \(Q\left(\mathrm{w}\right)\) -- решение уравнения Риккати:
 			\begin{equation}\label{eq16}
 				Q_{\mathrm{w}} = \mu\,(Q^{2}-Q),
 			\end{equation}
-			of the form:
+			имеющее вид:
 			\begin{equation}\label{eq17}
 				Q(\mathrm{w}) = \frac{1}{1 + \exp\left(\mu(\mathrm{w}-\mathrm{w}_{0})\right)}.
 			\end{equation}
 
-			Using \ref{eq15} and \ref{eq16}, \ref{eq14} can be written as:
+			Подставляя (\ref{eq15}) и (\ref{eq16}) в (\ref{eq14}), получаем:
 			\begin{equation}\label{eq18}
-				<big polynom>
+				\begin{split}
+					&\left(4 \mu^{2} M_{2}^{2}+2 M_{2}^{3} \xi_{2}\right) Q^{6}+\\
+					&+\left(4 \mu^{2} M_{1} M_{2}-8 \mu^{2} M_{2}^{2}+6 M_{1} M_{2}^{2} \xi_{2}\right) Q^{5}+\\
+					&+\left(\mu^{2} M_{1}^{2}-8 \mu^{2} M_{1} M_{2}+4 \mu^{2} M_{2}^{2}+6 M_{0} M_{2}^{2} \xi_{2}+6 M_{1}^{2} M_{2} \xi_{2}+4 M_{2}^{2} \xi_{1}\right) Q^{4}+\\
+					&+\left(-2 \mu^{2} M_{1}^{2}+4 \mu^{2} M_{1} M_{2}+12 M_{0} M_{1} M_{2} \xi_{2}+2 M_{1}^{3} \xi_{2}+8 M_{1} M_{2} \xi_{1}\right) Q^{3}+\\
+					&+\left(\mu^{2} M_{1}^{2}+6 M_{0}^{2} M_{2} \xi_{2}+6 M_{0} M_{1}^{2} \xi_{2}+8 M_{0} M_{2} \xi_{1}+4 M_{1}^{2} \xi_{1}-8 \mathrm{I}_{1} M_{2}\right) Q^{2}+\\
+					&+\left(6 M_{0}^{2} M_{1} \xi_{2}+8 M_{0} M_{1} \xi_{1}-8 \mathrm{I}_{1} M_{1}\right) Q+\\
+					&+\left(2 \xi_{2} M_{0}^{3}+4 \xi_{1} M_{0}^{2}-8 \mathrm{I}_{1} M_{0}\right)=0.
+				\end{split}
 			\end{equation}
-		\section{Numerical methods description}\label{ch220}			
 
-	\chapter{Numerical Analysis}\label{ch300}
-	
-	\chapter{Conclusion}\label{ch400}
+			Так как \(Q(\mathrm{w}) \neq 0\), каждый коэффициент уравнения (\ref{eq18}) должен быть равен нулю. Это приводит к следующим условиям:
+			\begin{equation} \label{eq19}
+				\begin{cases}
+					\displaystyle M_{0} = \frac{8 \mathrm{I}_{1}}{\mu^{2}}\\
+					\displaystyle M_{1} = -\frac{32 \mathrm{I}_{1}}{\mu^{2}}\\
+					\displaystyle M_{2} = \frac{32 \mathrm{I}_{1}}{\mu^{2}}\\
+					\displaystyle \xi_{1} = \frac{\mu^{2}}{2}\\
+					\displaystyle \xi_{2} = -\frac{\mu^{4}}{16 \mathrm{I}_{1}}.
+				\end{cases}
+			\end{equation}
+
+			Теперь решение уравнения (\ref{eq14}) можно записать в виде:
+			\begin{equation} \label{20}
+				Y(\mathrm{w}) = \frac{8 \mathrm{I}_{1}}{\mu^{2}} - \frac{32 \mathrm{I}_{1}}{\mu^{2}} \cdot \frac{1}{1 + \exp\left(\mu(\mathrm{w}-\mathrm{w}_{0})\right)} + \frac{32 \mathrm{I}_{1}}{\mu^{2}} \cdot \frac{1}{\left(1 + \exp\left(\mu(\mathrm{w}-\mathrm{w}_{0})\right)\right)^{2}},
+			\end{equation}
+			или
+			\begin{equation} \label{21}
+				Y(\mathrm{w}) = \frac{8\mathrm{I}_{1}}{\mu^2} \cdot \left(2Q(\mathrm{w})-1\right)^2
+			\end{equation}
+
+			Аналитическое решение уравнения (\ref{eq2}) имеет вид:
+			\begin{equation} \label{eq21}
+				u(z,t) = \frac{2 \sqrt{2 I_{1}}}{\left|\mu\right|} \left|\frac{2}{1+\mathrm{e}^{\mu\left(z-c_{0}t - \mathrm{w}_0\right)}} - 1\right| \cdot \mathrm{e}^{i\left(k z-\omega t\right)}
+			\end{equation}
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\linewidth]{fig1.png}
+				\caption{Тёмный солитон (\ref{eq21}) при параметрах \(I_{1} = 5.3\), \(\mu = 1.2\), \(c_{0} = 5.5\), \(t = 0\), \(\mathrm{w}_{0} = 3\)}
+				\label{fig1}
+			\end{figure}
+
+	\chapter{Численный анализ}\label{ch300}
+		\section{Описание численного метода}\label{ch220}
+			Для построения численной схемы перепишем исходную систему (\ref{eq1}) в виде:
+			\begin{equation}
+				\frac{\partial}{\partial z}\begin{pmatrix}u\\v\end{pmatrix}
+				= \bigl(\hat L + \hat N\bigr)\begin{pmatrix}u\\v\end{pmatrix},
+			\end{equation}
+			где
+			\begin{equation}
+				\hat L =
+					\left(\frac{i\Delta\beta}{2}+\frac{g}{2}\right)
+					- \delta\frac{\partial}{\partial t}
+					+ \left(\frac{g}{2\Omega_{g}^2}-\frac{i\beta_{2}}{2}\right)\frac{\partial^2}{\partial t^2}
+			\end{equation}
+			содержит все линейные члены (дисперсию, двулучепреломление и частотно-зависимое усиление), а
+			\begin{equation}\label{eq:nonlin_ode}
+				\hat N\begin{pmatrix}u\\v\end{pmatrix} =
+					i\gamma \cdot \begin{pmatrix}
+					\Bigl[\bigl(|u|^2+\tfrac{2}{3}|v|^2\bigr)u + \tfrac{1}{3}v^2 u^*\Bigr]\\[4pt]
+					\Bigl[\bigl(|v|^2+\tfrac{2}{3}|u|^2\bigr)v + \tfrac{1}{3}u^2 v^*\Bigr]
+					\end{pmatrix}
+			\end{equation}
+			-- нелинейный член.
+
+			Используем split-step метод Фурье с симметричным (Стрэнга) расщеплением и сформулируем начально-краевую задачу с периодическими граничными условиями:
+			\begin{equation} 
+				\begin{cases}
+					\displaystyle u\left(z, -\frac{L_{t}}{2}\right) = u\left(z, \frac{L_{t}}{2}\right),\\
+					\displaystyle v\left(z, -\frac{L_{t}}{2}\right) = v\left(z, \frac{L_{t}}{2}\right),\\
+					\displaystyle \frac{\partial u}{\partial t}\left(z, -\frac{L_{t}}{2}\right) = \cfrac{\partial u}{\partial t}\left(z, \frac{L_{t}}{2}\right),\\
+					\displaystyle \frac{\partial v}{\partial t}\left(z, -\frac{L_{t}}{2}\right) = \cfrac{\partial v}{\partial t}\left(z, \frac{L_{t}}{2}\right).
+				\end{cases}
+			\end{equation}
+			Распространение выполняется на периодическом временном окне \(t\in[\frac{-L_{t}}{2},\frac{L_{t}}{2}]\), дискретизованном \(N_t\) равноотстоящими точками с шагом \(\Delta t = L_t/N_t\).
+
+			Решение на шаге \(\Delta z\) аппроксимируется симметричным расщеплением:
+			\begin{equation}
+				\begin{pmatrix} u\\v \end{pmatrix}_{z+\Delta z} \approx
+				e^{\frac{\Delta z}{2}\hat L} \cdot
+				e^{\Delta z\hat N} \cdot
+				e^{\frac{\Delta z}{2}\hat L}
+				\begin{pmatrix}u\\v\end{pmatrix}_{z}.
+			\end{equation}
+			Линейная экспонента \(e^{\frac{\Delta z}{2}\hat L}\) применяется в области Фурье, а нелинейная экспонента \(e^{\Delta z\hat N}\) интегрируется методом Рунге-Кутты четвёртого порядка (RK4).
+
+			\subsection{Линейный подшаг}
+			В Фурье-области линейный оператор становится мультипликативным множителем. С соглашением \(\partial/\partial t \leftrightarrow i\omega_{f}\) преобразование Фурье оператора \(\hat L\), действующего на одно поле \(u\) (или \(v\)), имеет вид:
+			\begin{equation}
+				\widetilde L(\omega_{f})
+				= \frac{g}{2} - \frac{g}{2\Omega_g^2}\omega_{f}^2
+				+ i\Bigl(\frac{\Delta\beta}{2} - \delta\omega_{f} + \frac{\beta_2}{2}\omega_{f}^2\Bigr).
+			\end{equation}
+			Оба поля \(u\) и \(v\) испытывают одинаковый линейный отклик, поскольку линейная часть уравнения (\ref{eq1}) диагональна и одинакова для двух поляризаций.
+			Поэтому полушаг линейного оператора применяется в частотной области:
+			\begin{equation}
+				\left[
+				\begin{array}{ll}
+					\tilde u\left(\omega_f\right) \Big| _{z+\frac{\Delta z}{2}} =
+					\exp\!\Bigl[\widetilde L(\omega_f)\frac{\Delta z}{2}\Bigr] \tilde u\left(\omega_f\right) \Big| _{z},\\
+					\tilde v\left(\omega_f\right) \Big| _{z+\frac{\Delta z}{2}} =
+					\exp\!\Bigl[\widetilde L(\omega_f)\frac{\Delta z}{2}\Bigr] \tilde v\left(\omega_f\right) \Big| _{z},
+				\end{array}
+				\right.
+			\end{equation}
+			где $\tilde u = \mathcal{F}[u]$ и $\tilde v = \mathcal{F}[v]$ получаются с помощью быстрого преобразования Фурье (БПФ).
+
+			После полного нелинейного шага снова применяется линейный полушаг. Затем поля возвращаются во временную область с помощью обратного БПФ.
+			Процедуры БПФ предполагают периодические граничные условия, согласованные с конечным окном дискретизации.
+
+			\subsection{Нелинейный подшаг}
+			Нелинейный подшаг интегрирует обыкновенное дифференциальное уравнение
+			\begin{equation} \label{nonlinear_eq}
+				\frac{\partial}{\partial z}\begin{pmatrix}u\\v\end{pmatrix}
+				= \hat N\begin{pmatrix}u\\v\end{pmatrix},
+			\end{equation}
+			на полном шаге $\Delta z$. Уравнение \eqref{nonlinear_eq} решается классическим методом Рунге-Кутты четвёртого порядка.
+			Поскольку нелинейный член не содержит производных и зависимостей от соседних точек, интегрирование можно независимо выполнять в каждой точке сетки с помощью векторных операций. Используем классический RK4 в виде:
+			\begin{align}
+				&\mathbf{k}_1 = \hat N(\mathbf{w}), \nonumber\\
+				&\mathbf{k}_2 = \hat N(\mathbf{w} + \tfrac{\Delta z}{2}\mathbf{k}_1), \nonumber\\
+				&\mathbf{k}_3 = \hat N(\mathbf{w} + \tfrac{\Delta z}{2}\mathbf{k}_2), \nonumber\\
+				&\mathbf{k}_4 = \hat N(\mathbf{w} + \Delta z\,\mathbf{k}_3), \nonumber\\
+				&\mathbf{w}\Big| _{z+\Delta z} = \mathbf{w}\Big| _{z} + \frac{\Delta z}{6}\bigl(\mathbf{k}_1+2\mathbf{k}_2+2\mathbf{k}_3+\mathbf{k}_4\bigr), \nonumber
+			\end{align}
+			где $\mathbf{w}=(u,v)^T$. Порядок аппроксимации RK4 гарантирует, что основным источником численной погрешности остаётся ошибка расщепления.
+
+			\subsection{Симметричная схема расщепления по шагам}
+			Объединяя два полушага, получаем один полный шаг от $z$ до $z+\Delta z$:
+			\begin{enumerate}
+				\item \textbf{Первый линейный полушаг.} Вычислить $\tilde u = \mathcal{F}[u]$, $\tilde v = \mathcal{F}[v]$ с помощью БПФ.
+				Умножить на $\exp[\widetilde L(\omega)\frac{\Delta z}{2}]$ и вернуться обратно:
+				$u \leftarrow \mathcal{F}^{-1}[\tilde u]$, $v \leftarrow \mathcal{F}^{-1}[\tilde v]$.
+				\item \textbf{Полный нелинейный шаг.} Продвинуть $(u,v)$ на $\Delta z$ методом RK4 для уравнения \eqref{eq:nonlin_ode}.
+				\item \textbf{Второй линейный полушаг.} Повторить шаг~1.
+			\end{enumerate}
+
+		\section{Результаты моделирования}
+			Рассматриваем тёмный солитон вида (\ref{eq21}) в качестве начальных условий для начально-краевой задачи системы (\ref{eq1}). Полагаем \(v(z,t) \equiv 0\). На рис. \ref{fig2} показано поведение импульса при определённых параметрах модели. Солитон распространяется стационарно.
+			\begin{figure}[H]
+				\centering
+					\begin{subfigure}[t]{0.49\linewidth}
+						\centering
+						\includegraphics[width=\linewidth]{fig2.png}
+						\subcaption{Численное решение \(u\) при \(z=0\) и \(z=100\).}
+					\end{subfigure}
+					\hfill
+					\begin{subfigure}[t]{0.49\linewidth}
+						\centering
+						\includegraphics[width=\linewidth]{fig3.png}
+						\subcaption{\(\left|u(z,t)\right|\)}
+					\end{subfigure}
+				\caption{
+					Параметры импульса:
+					\(k = 12.6\),
+					\(c_{0} = 1.4\),
+					\(\mu = 0.97\),
+					\(I_{1} = 1\),
+					\(\omega = 0\),
+					\(\mathrm{w}_{0} = 15\).\\
+					Параметры модели:
+					\(\beta_{2} = 0.025\),
+					\(\Omega_{g} = 10\),
+					\(\delta = 20\),
+					\(\gamma = 0.0013\),
+					\(g = 0\),
+					\(\Delta \beta = 5\).
+				}
+				\label{fig2}
+			\end{figure}
+
+			Увеличивая коэффициент связи \(\gamma\) и возмущая начальное условие \(v(z=0, t) = \sin(t)\cdot\exp\left(-(c_{0}t-w_{0})\right)\), можно наблюдать затухание импульса, показанное на рис. \ref{fig3}.
+			\begin{figure}[H]
+				\centering
+					\begin{subfigure}[t]{0.49\linewidth}
+						\centering
+						\includegraphics[width=\linewidth]{fig4.png}
+						\subcaption{\(\left|u(z,t)\right|\)}
+					\end{subfigure}
+					\hfill
+					\begin{subfigure}[t]{0.49\linewidth}
+						\centering
+						\includegraphics[width=\linewidth]{fig5.png}
+						\subcaption{\(\left|v(z,t)\right|\)}
+					\end{subfigure}
+				\caption{
+					Численное решение для возмущённого \(v(z=0, t)\). \\
+					Параметры модели:
+					\(\beta_{2} = 0.025\),
+					\(\Omega_{g} = 10\),
+					\(\delta = 20\),
+					\(\gamma = 0.13\),
+					\(g = 0\),
+					\(\Delta \beta = 5\).
+				}
+				\label{fig3}
+			\end{figure}
+
+			По результатам численного анализа сделаны следующие выводы:
+			\begin{enumerate}
+				\item Тёмный солитон, найденный методом Кудряшова, распространяется стационарно;
+				\item Параметр модели \(\delta\) -- коэффициент линейного переноса;
+				\item Параметр модели \(\gamma\) -- параметр связи;
+				\item Параметр модели \(g\) -- коэффициент линейного усиления.
+			\end{enumerate}
+
+	\chapter{Заключение}\label{ch400}
 	
 	\bibliographystyle{unsrt}
 	\bibliography{export}
 
-\end{document} 
+\end{document}
