@@ -1,9 +1,0 @@
-\babel@toc {russian}{}\relax 
-\contentsline {chapter}{Introduction}{3}{}%
-\contentsline {section}{\numberline {1}Modern overview}{3}{}%
-\contentsline {section}{\numberline {2}Targets and goals}{3}{}%
-\contentsline {chapter}{\numberline {1}Analytical analysis}{4}{}%
-\contentsline {section}{\numberline {1}Particular analytical solutions of original equation}{4}{}%
-\contentsline {section}{\numberline {2}Numerical methods description}{6}{}%
-\contentsline {chapter}{\numberline {2}Numerical Analysis}{7}{}%
-\contentsline {chapter}{\numberline {3}Conclusion}{8}{}%
